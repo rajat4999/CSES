@@ -1,22 +1,25 @@
 #include <bits/stdc++.h>
-#define mod 1000000007
 using namespace std;
-string f(vector<string>&v,int i,int j,int n,vector<vector<string>>&dp){
-  if(i>=n || j>=n) return "zzzzz";
-  if(i==n-1 && j== n-1) return {v[i][j]};
-  if(dp[i][j]!="a") return dp[i][j];
-  string right=f(v,i+1,j,n,dp);
-  string down=f(v,i,j+1,n,dp);
-
-  return dp[i][j] =v[i][j]+min(right,down);
-
+int n;
+vector<vector<string>>dp;
+string solve(vector<vector<char>>&grid,int i, int j){
+    if(i==n-1 and j==n-1) return  string(1,grid[i][j]);
+    if(i>=n or j>=n) return "zz";
+    if(dp[i][j]!="0") return dp[i][j];
+    return dp[i][j]=grid[i][j]+min(solve(grid,i+1,j),solve(grid,i,j+1));
+    
 }
 int main() {
-  int n;
-  cin>>n;
-  vector<string>v(n);
-  for(int i=0;i<n;i++) cin>>v[i];
-  vector<vector<string>>dp(n,vector<string>(n,"a"));
-  string ans=f(v,0,0,n,dp);
-  cout<<ans<<endl;
+	// your code goes here
+    cin>>n;
+    vector<vector<char>>grid(n,vector<char>(n));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>grid[i][j];
+        }
+    }
+    dp.assign(n,vector<string>(n,"0"));
+    
+    cout<<solve(grid,0,0);
+    
 }
